@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nik')->nullable();
             $table->string('nomor_handphone')->nullable();
             $table->text('photo')->nullable();
+            $table->string('pengguna')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
