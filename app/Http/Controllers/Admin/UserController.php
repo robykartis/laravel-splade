@@ -4,26 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Tables\Users;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use ProtoneMedia\Splade\SpladeTable;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Tables\Users as UsersTable;
+use ProtoneMedia\Splade\Facades\SEO;
 
 class UserController extends Controller
 {
     public function index()
     {
-
+        $title = 'User';
         return view('admin.user.index', [
-            'users' => Users::class,
+            'users' => UsersTable::class,
+            'title' => $title
         ]);
     }
     public function show(User $user)
     {
+        $title = $user->name;
+        // dd($title);
         return view('admin.user.show', [
-            'user' => $user
+            'user' => $user,
+            'title' => $title
         ]);
     }
 }

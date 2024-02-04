@@ -1,13 +1,16 @@
 <x-app-layout>
+    @seoTitle($title)
+    @seoDescription('usermanagement')
+    @seoKeywords('laravel')
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        {{ __('Users') }}
     </x-slot>
 
     <div class="p-4 h-full sm:ml-64">
         <div class="grid grid-cols-1">
             <!-- Kolom 1 -->
             <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
-                <h5 class="mb-2 text-2xl font-bold text-gray-900">Kolom Pertama</h5>
+                <h5 class="mb-2 text-2xl font-bold text-gray-900 mb-4">Kolom Pertama</h5>
                 <x-splade-table :for="$users" pagination-scroll="head" striped>
                     @cell('action', $user)
                         <Link href="{{ route('users.show', $user) }}"
@@ -15,6 +18,10 @@
                         Lihat
                         </Link>
                     @endcell
+                    @cell('created_at', $user)
+                        {{ \Carbon\Carbon::parse($user->created_at)->translatedFormat('d F Y') }}
+                    @endcell
+
                 </x-splade-table>
             </div>
 

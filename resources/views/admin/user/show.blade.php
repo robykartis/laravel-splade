@@ -1,6 +1,9 @@
 <x-app-layout>
+    @seoTitle($title)
+    @seoDescription('usermanagement')
+    @seoKeywords('laravel')
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        {{ __('Show') }}
     </x-slot>
 
     <div class="p-4 h-full sm:ml-64">

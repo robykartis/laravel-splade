@@ -3,8 +3,10 @@
 namespace App\Tables;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Excel;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -52,34 +54,27 @@ class Users extends AbstractTable
         return QueryBuilder::for(User::class)
             ->defaultSort('name')
             ->allowedFilters(['name', 'email', 'pengguna', $globalSearch])
-            ->allowedSorts(['name', 'email', 'pengguna']);
+            ->allowedSorts(['name', 'id', 'pengguna', 'created_at']);
     }
 
-    /**
-     * Configure the given SpladeTable.
-     *
-     * @param \ProtoneMedia\Splade\SpladeTable $table
-     * @return void
-     */
+
     public function configure(SpladeTable $table)
     {
         $table
+            ->export()
             ->withGlobalSearch(columns: ['id', 'name', 'email', 'pengguna', 'created_at'])
             ->column('id', sortable: true)
             ->defaultSort('name')
-            ->withGlobalSearch(columns: ['name', 'email', 'pengguna'])
             ->column('name', sortable: true, searchable: true)
-            ->column('email', sortable: true, searchable: true)
+            ->column('email', searchable: true)
             ->column('created_at', sortable: true, searchable: true, canBeHidden: false)
-            // ->rowLink(function (User $user) {
-            //     return route('users.show', $user);
-            // })
             ->selectFilter('pengguna', [
                 'su' => 'Super User',
                 'admin' => 'Admin',
                 'user' => 'User',
             ])
-            ->column('action')
+
+            ->column('action', exportAs: false)
             ->paginate();
     }
 }
